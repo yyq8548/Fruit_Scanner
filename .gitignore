@@ -1,0 +1,6 @@
+﻿dataset/
+*.zip
+*.h5
+*.pth
+*.pt
+__pycache__/
