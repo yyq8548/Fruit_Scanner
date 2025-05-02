@@ -16,7 +16,7 @@ uploaded_file = st.file_uploader("Upload fruit image", type=["jpg", "jpeg", "png
 
 if uploaded_file:
     image = Image.open(uploaded_file).convert("RGB")
-    st.image(image, caption="Uploaded Image", use_container_width=True)
+    st.image(image, caption="Uploaded Image", width="stretch")
 
     with st.spinner("Agent is analyzing the image..."):
         result = agent.analyze(image)
