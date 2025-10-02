@@ -4,3 +4,7 @@ __pycache__/
 models/*.h5
 models/*.keras
 dataset/
+*.h5
+*.keras
+*.pt
+*.pth
