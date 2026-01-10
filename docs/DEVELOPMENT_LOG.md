@@ -3,6 +3,20 @@
 This document tracks the evolution of the project from a CNN-based fruit
 classifier into an Agentic AI application.
 
+## Change Log
+
+  Date         Milestone                                        Status
+  ------------ ------------------------------------------------ --------
+  2025-03-15   Built DenseNet201 fruit freshness classifier     ✅
+  2025-04-05   Streamlit application created                    ✅
+  2025-04-05   Integrated trained DenseNet201 model             ✅
+  2025-05-02   Implemented image quality checking               ✅
+  2025-10-02   Refactored to tool-based AI agent architecture   ✅
+  Future       GPT reasoning tool                               ⏳
+  Future       Agent planning engine                            ⏳
+  Future       Memory & RAG                                     ⏳
+  Future       Cloud deployment                                 ⏳
+
 ------------------------------------------------------------------------
 
 # Session 1 --- Foundation
@@ -121,16 +135,3 @@ By the end of the project, the expected highlights include:
 
 ------------------------------------------------------------------------
 
-## Change Log
-
-  Date         Milestone                                        Status
-  ------------ ------------------------------------------------ --------
-  2025-03-15   Built DenseNet201 fruit freshness classifier     ✅
-  2025-04-05   Streamlit application created                    ✅
-  2025-04-05   Integrated trained DenseNet201 model             ✅
-  2025-05-02   Implemented image quality checking               ✅
-  2025-10-02   Refactored to tool-based AI agent architecture   ✅
-  Future       GPT reasoning tool                               ⏳
-  Future       Agent planning engine                            ⏳
-  Future       Memory & RAG                                     ⏳
-  Future       Cloud deployment                                 ⏳
