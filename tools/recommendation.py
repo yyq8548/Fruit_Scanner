@@ -32,5 +32,11 @@ class RecommendationTool:
                 "It is likely acceptable to purchase or eat."
             )
 
+        if state.reasoning:
+            state.recommendation += (
+                f" Shelf-life estimate: {state.reasoning.shelf_life_estimate}. "
+                f"Storage advice: {state.reasoning.storage_advice}"
+            )
+
         state.add_trace("RecommendationTool generated final freshness recommendation.")
         return state

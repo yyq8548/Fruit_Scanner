@@ -20,10 +20,19 @@ class PredictionResult:
 
 
 @dataclass
+class ReasoningResult:
+    explanation: str
+    shelf_life_estimate: str
+    storage_advice: str
+    risk_level: str
+
+
+@dataclass
 class AgentState:
     image: Image.Image
     quality: Optional[ImageQualityResult] = None
     prediction: Optional[PredictionResult] = None
+    reasoning: Optional[ReasoningResult] = None
     decision: str = "pending"
     status: str = "initialized"
     recommendation: str = ""

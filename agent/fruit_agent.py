@@ -5,6 +5,7 @@ from agent.planner import Planner
 from tools.image_quality import ImageQualityTool
 from tools.vision import DenseNetVisionTool
 from tools.confidence import ConfidenceTool
+from tools.reasoning import RuleBasedReasoningTool
 from tools.recommendation import RecommendationTool
 
 
@@ -20,6 +21,7 @@ class FruitScannerAgent:
         self.quality_tool = ImageQualityTool()
         self.vision_tool = DenseNetVisionTool(model_path=model_path)
         self.confidence_tool = ConfidenceTool(min_confidence=min_confidence)
+        self.reasoning_tool = RuleBasedReasoningTool()
         self.recommendation_tool = RecommendationTool()
 
     def run(self, image: Image.Image) -> AgentState:
@@ -35,6 +37,7 @@ class FruitScannerAgent:
             state.decision = "retake_photo"
             state.status = "stopped_due_to_image_quality"
             state.add_trace("Agent stopped before inference based on planner decision.")
+            state = self.reasoning_tool.run(state)
             state = self.recommendation_tool.run(state)
             return state
 
@@ -47,9 +50,11 @@ class FruitScannerAgent:
         if next_action == "request_retake":
             state.decision = "retake_photo"
             state.status = "low_confidence"
+            state = self.reasoning_tool.run(state)
             state = self.recommendation_tool.run(state)
             return state
 
+        state = self.reasoning_tool.run(state)
         state = self.recommendation_tool.run(state)
         state.add_trace("Agent workflow completed.")
         return state

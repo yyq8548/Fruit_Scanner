@@ -8,7 +8,7 @@ st.caption("Agentic computer vision assistant for produce quality assessment")
 
 st.write(
     "Upload a fruit image. The agent checks image quality, runs DenseNet201 inference, "
-    "evaluates confidence, and returns an actionable freshness recommendation."
+    "evaluates confidence, reasons over the result, and returns a recommendation."
 )
 
 agent = FruitScannerAgent(model_path="models/densenet201.h5")
@@ -31,6 +31,13 @@ if uploaded_file:
         st.write(f"**Confidence:** {state.prediction.confidence:.2%}")
     else:
         st.write("No prediction was generated because the agent stopped early.")
+
+    st.subheader("Reasoning")
+    if state.reasoning:
+        st.write(f"**Risk Level:** {state.reasoning.risk_level}")
+        st.write(f"**Explanation:** {state.reasoning.explanation}")
+        st.write(f"**Shelf-life Estimate:** {state.reasoning.shelf_life_estimate}")
+        st.write(f"**Storage Advice:** {state.reasoning.storage_advice}")
 
     st.subheader("Image Quality")
     if state.quality:
