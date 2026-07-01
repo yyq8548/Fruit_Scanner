@@ -36,6 +36,24 @@ Classes include:
 
 The dataset includes different backgrounds, salt-and-pepper noise, and varied image conditions to help test model robustness.
 
+Due to GitHub file size limitations, the dataset is not included in this repository.
+
+Dataset:
+[https://www.kaggle.com/datasets/sriramr/fruits-fresh-and-rotten-for-classification](https://drive.google.com/drive/folders/1X72J4bYCar0xv47WS2leSJG-fGwoRSbb?usp=sharing)
+
+After downloading, organize the dataset as:
+
+dataset/
+│
+├── train/
+│   ├── freshapples/
+│   ├── freshbanana/
+│   ├── ...
+│
+└── test/
+    ├── freshapples/
+    ├── ...
+
 ## Project Pipeline
 
 ```text
@@ -155,17 +173,3 @@ The key takeaway is that pre-training significantly improves model stability, co
 - Combine classification with object detection models such as YOLO
 - Optimize inference speed for real-time use
 
-## My Contributions
-
-- Proposed the original fruit-scanning app idea and machine learning direction
-- Helped define the project scope and model evaluation strategy
-- Evaluated DenseNet-based CNN architectures for fruit freshness classification
-- Compared scratch training with ImageNet transfer learning
-- Analyzed model accuracy, loss, convergence behavior, and generalization
-- Presented the results section and contributed to the final project documentation
-
-## Authors
-
-- Yeqiao Yu
-- Jiachen Wang
-- John Liu
