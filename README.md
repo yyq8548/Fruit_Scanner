@@ -1,175 +1,85 @@
-# 🍎 Fresh or Rotten Fruits Scanner
+# 🍎 FreshSense AI
 
-A deep learning project that explores transfer learning for fruit freshness classification using DenseNet architectures.
+### Agentic Computer Vision Assistant for Produce Quality Assessment
 
-## Overview
+FreshSense AI is an **agentic computer vision application** that
+evaluates fruit freshness from a single image. Rather than exposing a
+deep learning model directly, the system is designed around a
+**tool-orchestrating AI agent** that autonomously validates image
+quality, performs DenseNet201 inference, evaluates prediction
+confidence, and generates actionable recommendations.
 
-The goal of this project was to understand what backend model architecture would best support a future fruit-scanning app. Instead of jumping directly into app development, we focused on building a strong machine learning foundation.
+## Features
 
-We trained and evaluated DenseNet121 and DenseNet201 models on a 13,000+ image fruit dataset to classify fresh vs. rotten produce. The project compares two strategies: training from scratch and using ImageNet pre-trained weights with fine-tuning.
+-   DenseNet201 fruit freshness classification
+-   Tool-based AI Agent architecture
+-   Image quality assessment
+-   Confidence-aware decision making
+-   Streamlit web application
+-   Modular architecture for future LLM integration
 
-The pre-trained DenseNet201 model converged much faster and achieved about **99.7% test accuracy** with very low loss, while also showing smoother validation curves. This validated that transfer learning is highly effective for small-to-medium computer vision datasets.
+## Architecture
 
-## Motivation
-
-Consumers often struggle to judge fruit freshness beyond obvious visual cues. Grocery prices are increasing, and buying damaged or quickly spoiled produce can lead to food waste. Existing fruit quality detection systems are usually designed for farms or facilities and are not easily accessible to everyday consumers.
-
-This project explores whether a deep learning model can serve as the backend foundation for a future real-time fruit scanning application.
-
-## Dataset
-
-We used the **Fresh and Rotten Fruits Dataset**.
-
-- Training images: **10,901**
-- Testing images: **2,698**
-- Total images: **13,599**
-- Number of classes: **6**
-
-Classes include:
-
-- Fresh Apples
-- Rotten Apples
-- Fresh Bananas
-- Rotten Bananas
-- Fresh Oranges
-- Rotten Oranges
-
-The dataset includes different backgrounds, salt-and-pepper noise, and varied image conditions to help test model robustness.
-
-Due to GitHub file size limitations, the dataset is not included in this repository.
-
-Dataset:
-[https://www.kaggle.com/datasets/sriramr/fruits-fresh-and-rotten-for-classification](https://drive.google.com/drive/folders/1X72J4bYCar0xv47WS2leSJG-fGwoRSbb?usp=sharing)
-
-After downloading, organize the dataset as:
-
-dataset/
-│
-├── train/
-│   ├── freshapples/
-│   ├── freshbanana/
-│   ├── ...
-│
-└── test/
-    ├── freshapples/
-    ├── ...
-
-## Project Pipeline
-
-```text
-Dataset
-   ↓
-Image Preprocessing
-   ↓
-CNN Model Training
-   ↓
-Scratch Training vs. ImageNet Transfer Learning
-   ↓
-Model Evaluation
-   ↓
-Accuracy, Loss, Convergence, and Confusion Matrix Analysis
+``` text
+User Upload
+    ↓
+FruitScannerAgent
+    ↓
+ImageQualityTool
+    ↓
+DenseNet201 Vision Tool
+    ↓
+Confidence Tool
+    ↓
+Recommendation Tool
+    ↓
+Final Response
 ```
 
-## Technologies Used
+The DenseNet201 model is one tool---not the agent itself.
 
-- Python
-- TensorFlow / Keras
-- Google Colab
-- NVIDIA GPU
-- NumPy
-- Matplotlib
-- DenseNet121
-- DenseNet201
-- Transfer Learning
+## Performance
 
-## Data Preprocessing
+-   Test Accuracy: **99.7%**
+-   Test Loss: **0.014**
+-   Transfer Learning with ImageNet
+-   Input Resolution: **224×224**
 
-All images were resized to:
+## Tech Stack
 
-```text
-224 × 224 × 3
-```
+-   Python
+-   TensorFlow / Keras
+-   DenseNet201
+-   Streamlit
+-   NumPy
+-   Pillow
 
-The preprocessing pipeline included:
+## Roadmap
 
-- Image resizing
-- Folder-based label encoding
-- Train/test dataset loading
-- Batch processing
-- Normalization
-- Evaluation under noisy and varied image conditions
+### Completed
 
-## Model Architectures
+-   DenseNet201 training
+-   Streamlit application
+-   Tool-based AI Agent
+-   Image quality assessment
+-   Confidence evaluation
 
-### DenseNet201 Trained from Scratch
+### Next
 
-The scratch model used random initialization and trained the full DenseNet201 network end-to-end on the fruit dataset.
+-   GPT reasoning tool
+-   Shelf-life estimation
+-   Memory
+-   RAG
+-   Docker
+-   Cloud deployment
 
-### DenseNet201 with ImageNet Pre-training
+## Documentation
 
-The pre-trained model used DenseNet201 initialized with ImageNet weights. The original classification head was removed and replaced with a new classifier for 6 fruit freshness classes.
+See `docs/DEVELOPMENT_LOG.md`
 
-The model structure included:
+## Resume Summary
 
-- DenseNet201 feature extractor
-- Frozen base layers
-- GlobalAveragePooling2D
-- Dense layer with Softmax activation
-
-## Why DenseNet201?
-
-We selected DenseNet201 because its dense connectivity improves gradient flow and feature reuse, which stabilizes training in deeper architectures.
-
-For fruit freshness classification, the model needs to detect subtle texture and color variations, such as bruising, mold, discoloration, and rotten spots. A deeper architecture like DenseNet201 helps capture these fine-grained visual patterns.
-
-DenseNet201 also has strong ImageNet pre-trained weights, making it a good fit for transfer learning on a moderate-sized dataset. Empirically, DenseNet201 outperformed DenseNet121 and ResNet50 in both accuracy and convergence speed, validating the architectural choice.
-
-## Training Strategy
-
-The model was trained using:
-
-- Optimizer: **Adam**
-- Loss function: **Categorical Crossentropy**
-- Epochs: **30**
-- Batch size: **32**
-- Learning rate scheduling
-- Early stopping
-- Model checkpointing based on validation loss
-
-Learning rate decay was used to take larger steps early in training and smaller steps later for fine-tuning. Model checkpointing saved the best model when validation loss improved.
-
-## Results
-
-| Model | Test Accuracy | Test Loss |
-|---|---:|---:|
-| VGG16 | 22.3% | 1.7753 |
-| ResNet50 | 83.1% | 1.1303 |
-| DenseNet121 | 99.1% | 0.0212 |
-| DenseNet201 Scratch | 99.70% | 0.0101 |
-| DenseNet201 ImageNet Pre-trained | 99.74% | 0.0144 |
-
-## Key Findings
-
-- DenseNet201 achieved **99.7%+ test accuracy**.
-- The ImageNet pre-trained DenseNet201 converged in about **8 epochs**.
-- The scratch-trained DenseNet201 required around **20 epochs** to converge.
-- Transfer learning improved convergence speed and training stability.
-- Pre-trained DenseNet201 showed smoother validation curves and strong generalization.
-- DenseNet201 outperformed DenseNet121 and ResNet50 on this dataset.
-
-## Conclusion
-
-This project demonstrated that transfer learning is highly effective for small-to-medium image classification datasets. The pre-trained DenseNet201 model provided strong accuracy, faster convergence, and stable validation performance, making it a strong backend candidate for a future real-time fruit freshness scanning application.
-
-The key takeaway is that pre-training significantly improves model stability, convergence speed, and generalization, which are critical for deploying a computer vision model in real consumer environments.
-
-## Future Work
-
-- Expand the dataset to more fruit and vegetable categories
-- Improve performance under real-world lighting conditions
-- Add stronger data augmentation
-- Deploy the model using TensorFlow Lite
-- Build a mobile or web-based fruit scanning interface
-- Combine classification with object detection models such as YOLO
-- Optimize inference speed for real-time use
-
+Built an agentic computer vision application that orchestrates image
+quality assessment, DenseNet201 inference, confidence-based decision
+making, and recommendation generation for real-time produce freshness
+evaluation.
