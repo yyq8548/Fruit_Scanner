@@ -5,17 +5,16 @@ classifier into an Agentic AI application.
 
 ## Change Log
 
-  Date         Milestone                                        Status
+  Date         Milestone                                        
   ------------ ------------------------------------------------ --------
-  2025-03-15   Built DenseNet201 fruit freshness classifier     ✅
-  2025-04-05   Streamlit application created                    ✅
-  2025-04-05   Integrated trained DenseNet201 model             ✅
-  2025-05-02   Implemented image quality checking               ✅
-  2025-10-02   Refactored to tool-based AI agent architecture   ✅
-  Future       GPT reasoning tool                               ⏳
-  Future       Agent planning engine                            ⏳
-  Future       Memory & RAG                                     ⏳
-  Future       Cloud deployment                                 ⏳
+  2025-03-15   Built DenseNet201 fruit freshness classifier     
+  2025-04-05   Streamlit application created                    
+  2025-04-05   Integrated trained DenseNet201 model             
+  2025-05-02   Implemented image quality checking               
+  2025-10-02   Refactored to tool-based AI agent architecture
+  2026-05-15   Planner，Rule-based Reasoning，Unit Testing
+  2026-06-02   Scene Analysis + Threshold Tuning                                    
+  2026-07-01   Added a centralized configuration system for FreshSense AI.
 
 ------------------------------------------------------------------------
 

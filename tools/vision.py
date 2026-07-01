@@ -1,8 +1,9 @@
 import os
 import numpy as np
 from PIL import Image
+
 from agent.state import AgentState, PredictionResult
-from utils.constants import CLASS_NAMES
+from utils.config import CLASS_NAMES, IMAGE_SIZE
 
 
 class DenseNetVisionTool:
@@ -23,7 +24,7 @@ class DenseNetVisionTool:
             print(f"Model file not found at {model_path}. Running in demo mode.")
 
     def _preprocess(self, image: Image.Image) -> np.ndarray:
-        image = image.resize((224, 224))
+        image = image.resize(IMAGE_SIZE)
         arr = np.array(image).astype("float32") / 255.0
         arr = np.expand_dims(arr, axis=0)
         return arr

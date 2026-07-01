@@ -1,10 +1,11 @@
 from agent.state import AgentState
+from utils.config import MIN_CONFIDENCE
 
 
 class ConfidenceTool:
     """Makes an autonomous decision based on model confidence."""
 
-    def __init__(self, min_confidence: float = 0.70):
+    def __init__(self, min_confidence: float = MIN_CONFIDENCE):
         self.min_confidence = min_confidence
 
     def run(self, state: AgentState) -> AgentState:

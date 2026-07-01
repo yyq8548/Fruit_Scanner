@@ -1,6 +1,8 @@
 import numpy as np
 from PIL import ImageFilter
+
 from agent.state import AgentState, ImageQualityResult
+from utils.config import BLUR_THRESHOLD, DARK_THRESHOLD, OVEREXPOSED_THRESHOLD
 
 
 class ImageQualityTool:
@@ -8,9 +10,9 @@ class ImageQualityTool:
 
     def __init__(
         self,
-        dark_threshold: float = 60.0,
-        overexposed_threshold: float = 235.0,
-        blur_threshold: float = 80.0,
+        dark_threshold: float = DARK_THRESHOLD,
+        overexposed_threshold: float = OVEREXPOSED_THRESHOLD,
+        blur_threshold: float = BLUR_THRESHOLD,
     ):
         self.dark_threshold = dark_threshold
         self.overexposed_threshold = overexposed_threshold

@@ -1,17 +1,19 @@
 import streamlit as st
 from PIL import Image
-from agent.fruit_agent import FruitScannerAgent
 
-st.set_page_config(page_title="FreshSense AI", page_icon="🍎", layout="centered")
-st.title("🍎 FreshSense AI")
+from agent.fruit_agent import FruitScannerAgent
+from utils.config import APP_ICON, APP_LAYOUT, APP_TITLE, MODEL_PATH
+
+st.set_page_config(page_title=APP_TITLE, page_icon=APP_ICON, layout=APP_LAYOUT)
+st.title(f"{APP_ICON} {APP_TITLE}")
 st.caption("Agentic computer vision assistant for produce quality assessment")
 
 st.write(
-    "Upload a fruit image. The agent checks image quality, runs DenseNet201 inference, "
-    "evaluates confidence, reasons over the result, and returns a recommendation."
+    "Upload a fruit image. The agent checks image quality, validates the scene, "
+    "runs DenseNet201 inference, reasons over the result, and returns a recommendation."
 )
 
-agent = FruitScannerAgent(model_path="models/densenet201.h5")
+agent = FruitScannerAgent(model_path=MODEL_PATH)
 uploaded_file = st.file_uploader("Upload fruit image", type=["jpg", "jpeg", "png"])
 
 if uploaded_file:
@@ -24,6 +26,13 @@ if uploaded_file:
     st.subheader("Agent Decision")
     st.write(f"**Decision:** {state.decision}")
     st.write(f"**Status:** {state.status}")
+
+    st.subheader("Scene Analysis")
+    if state.scene:
+        st.write(f"**Foreground Ratio:** {state.scene.foreground_ratio:.4f}")
+        st.write(f"**Fruit Too Small:** {state.scene.fruit_is_too_small}")
+        st.write(f"**Likely Empty Scene:** {state.scene.likely_empty_scene}")
+        st.write(f"**Needs Closer Photo/Crop:** {state.scene.needs_crop_or_closer_photo}")
 
     st.subheader("Prediction")
     if state.prediction:

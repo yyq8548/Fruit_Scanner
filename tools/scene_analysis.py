@@ -2,18 +2,17 @@ import numpy as np
 from PIL import ImageFilter
 
 from agent.state import AgentState, SceneAnalysisResult
+from utils.config import EDGE_THRESHOLD_FLOOR, MIN_FOREGROUND_RATIO, SMALL_FRUIT_RATIO
 
 
 class SceneAnalysisTool:
-    """
-    Lightweight scene validation tool.
+    """Lightweight scene validation tool."""
 
-    This is not a full object detector. It estimates whether the image has enough
-    foreground detail for meaningful inference. Later this can be replaced by YOLO
-    or another object detection model.
-    """
-
-    def __init__(self, min_foreground_ratio: float = 0.005, small_fruit_ratio: float = 0.015):
+    def __init__(
+        self,
+        min_foreground_ratio: float = MIN_FOREGROUND_RATIO,
+        small_fruit_ratio: float = SMALL_FRUIT_RATIO,
+    ):
         self.min_foreground_ratio = min_foreground_ratio
         self.small_fruit_ratio = small_fruit_ratio
 
@@ -25,8 +24,7 @@ class SceneAnalysisTool:
         edges = gray.filter(ImageFilter.FIND_EDGES)
         edge_arr = np.array(edges).astype("float32")
 
-        # Estimate foreground/detail area using edge pixels.
-        threshold = max(20.0, float(edge_arr.mean() + edge_arr.std()))
+        threshold = max(EDGE_THRESHOLD_FLOOR, float(edge_arr.mean() + edge_arr.std()))
         foreground_mask = edge_arr > threshold
         foreground_ratio = float(foreground_mask.mean())
 
