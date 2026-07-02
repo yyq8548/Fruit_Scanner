@@ -15,12 +15,9 @@ class Planner:
         return "run_scene_analysis"
 
     def plan_after_scene_analysis(self, state: AgentState) -> str:
-        if state.scene is None:
-            return "run_scene_analysis"
-
-        if state.scene.likely_empty_scene or state.scene.needs_crop_or_closer_photo:
-            return "request_retake"
-
+        # Scene analysis is advisory only. It can add warnings, but it should not
+        # block DenseNet inference because lightweight heuristics can over-reject
+        # valid fruit images such as smooth bananas on simple backgrounds.
         return "run_vision"
 
     def plan_after_inference(self, state: AgentState) -> str:

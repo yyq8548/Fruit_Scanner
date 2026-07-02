@@ -6,7 +6,13 @@ from utils.config import EDGE_THRESHOLD_FLOOR, MIN_FOREGROUND_RATIO, SMALL_FRUIT
 
 
 class SceneAnalysisTool:
-    """Lightweight scene validation tool."""
+    """
+    Lightweight advisory scene validation tool.
+
+    This tool adds scene-related warnings but does not block inference.
+    It is intentionally advisory because edge-based heuristics can over-reject
+    valid images with smooth fruit surfaces or simple backgrounds.
+    """
 
     def __init__(
         self,
@@ -42,12 +48,18 @@ class SceneAnalysisTool:
         )
 
         state.add_trace(
-            f"SceneAnalysisTool completed: foreground_ratio={foreground_ratio:.4f}."
+            f"SceneAnalysisTool completed as advisory check: foreground_ratio={foreground_ratio:.4f}."
         )
 
         if likely_empty_scene:
-            state.add_warning("The image may not contain enough visible fruit detail.")
+            state.add_warning(
+                "Scene advisory: the image may contain limited visible fruit detail, but inference will continue.",
+                level="suggestion",
+            )
         elif fruit_is_too_small:
-            state.add_warning("The fruit may be too small in the frame. Move closer or crop the image.")
+            state.add_warning(
+                "Scene advisory: the fruit may be small in the frame. A closer photo may improve accuracy.",
+                level="suggestion",
+            )
 
         return state

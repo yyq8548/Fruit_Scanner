@@ -42,13 +42,6 @@ class FruitScannerAgent:
         next_action = self.planner.plan_after_scene_analysis(state)
         state.add_trace(f"Planner selected next action after scene analysis: {next_action}.")
 
-        if next_action == "request_retake":
-            state.decision = "retake_photo"
-            state.status = "stopped_due_to_scene_validation"
-            state = self.reasoning_tool.run(state)
-            state = self.recommendation_tool.run(state)
-            return state
-
         state = self.vision_tool.run(state)
         state = self.confidence_tool.run(state)
 

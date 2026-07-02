@@ -9,7 +9,7 @@ st.title(f"{APP_ICON} {APP_TITLE}")
 st.caption("Agentic computer vision assistant for produce quality assessment")
 
 st.write(
-    "Upload a fruit image. The agent checks image quality, validates the scene, "
+    "Upload a fruit image. The agent checks image quality, uses scene analysis as advisory feedback, "
     "runs DenseNet201 inference, reasons over the result, and returns a recommendation."
 )
 
@@ -32,7 +32,7 @@ if uploaded_file:
         st.write(f"**Foreground Ratio:** {state.scene.foreground_ratio:.4f}")
         st.write(f"**Fruit Too Small:** {state.scene.fruit_is_too_small}")
         st.write(f"**Likely Empty Scene:** {state.scene.likely_empty_scene}")
-        st.write(f"**Needs Closer Photo/Crop:** {state.scene.needs_crop_or_closer_photo}")
+        st.write(f"**Advisory Only:** Yes — scene analysis does not block inference.")
 
     st.subheader("Prediction")
     if state.prediction:
@@ -56,8 +56,14 @@ if uploaded_file:
         st.write(f"**Blurry:** {state.quality.is_blurry}")
         st.write(f"**Overexposed:** {state.quality.is_overexposed}")
 
-    if state.warnings:
-        st.warning("\n".join(state.warnings))
+    if state.structured_warnings:
+        for warning in state.structured_warnings:
+            if warning.level == "error":
+                st.error(warning.message)
+            elif warning.level == "suggestion":
+                st.info(warning.message)
+            else:
+                st.warning(warning.message)
 
     st.subheader("Recommendation")
     st.success(state.recommendation)
