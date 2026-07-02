@@ -36,6 +36,12 @@ class PredictionResult:
 
 
 @dataclass
+class RetrievalResult:
+    query: str
+    documents: List[Dict[str, Any]] = field(default_factory=list)
+
+
+@dataclass
 class ReasoningResult:
     explanation: str
     shelf_life_estimate: str
@@ -50,6 +56,7 @@ class AgentState:
     quality: Optional[ImageQualityResult] = None
     scene: Optional[SceneAnalysisResult] = None
     prediction: Optional[PredictionResult] = None
+    retrieval: Optional[RetrievalResult] = None
     reasoning: Optional[ReasoningResult] = None
     decision: str = "pending"
     status: str = "initialized"

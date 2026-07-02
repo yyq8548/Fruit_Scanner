@@ -44,7 +44,8 @@ class LLMReasoningTool:
                         "role": "system",
                         "content": (
                             "You are a produce freshness assistant. "
-                            "Use the model prediction and image-quality metadata to generate concise, practical advice. "
+                            "Use the model prediction, image-quality metadata, and retrieved food-safety knowledge. "
+                            "Do not invent facts that conflict with the retrieved knowledge. "
                             "Return only valid JSON with keys: explanation, shelf_life_estimate, storage_advice, risk_level."
                         ),
                     },
@@ -63,7 +64,7 @@ class LLMReasoningTool:
                 shelf_life_estimate=data.get("shelf_life_estimate", "Unknown"),
                 storage_advice=data.get("storage_advice", "Store appropriately based on produce type."),
                 risk_level=data.get("risk_level", "unknown"),
-                source="llm",
+                source="llm_rag" if state.retrieval else "llm",
             )
             state.add_trace(f"LLMReasoningTool generated reasoning using {self.model}.")
             return state
@@ -83,6 +84,7 @@ class LLMReasoningTool:
         prediction = state.prediction
         quality = state.quality
         scene = state.scene
+        retrieved_docs = state.retrieval.documents if state.retrieval else []
 
         return {
             "prediction": {
@@ -102,5 +104,6 @@ class LLMReasoningTool:
                 "likely_empty_scene": scene.likely_empty_scene if scene else None,
                 "needs_crop_or_closer_photo": scene.needs_crop_or_closer_photo if scene else None,
             },
+            "retrieved_knowledge": retrieved_docs,
             "warnings": state.warnings,
         }

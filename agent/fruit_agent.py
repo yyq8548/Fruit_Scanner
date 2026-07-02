@@ -6,6 +6,7 @@ from tools.image_quality import ImageQualityTool
 from tools.scene_analysis import SceneAnalysisTool
 from tools.vision import DenseNetVisionTool
 from tools.confidence import ConfidenceTool
+from tools.rag import FoodKnowledgeRetriever
 from tools.llm_reasoning import LLMReasoningTool
 from tools.recommendation import RecommendationTool
 from utils.config import MIN_CONFIDENCE
@@ -20,6 +21,7 @@ class FruitScannerAgent:
         self.scene_tool = SceneAnalysisTool()
         self.vision_tool = DenseNetVisionTool(model_path=model_path)
         self.confidence_tool = ConfidenceTool(min_confidence=min_confidence)
+        self.retriever_tool = FoodKnowledgeRetriever()
         self.reasoning_tool = LLMReasoningTool()
         self.recommendation_tool = RecommendationTool()
 
@@ -34,6 +36,7 @@ class FruitScannerAgent:
         if next_action == "request_retake":
             state.decision = "retake_photo"
             state.status = "stopped_due_to_image_quality"
+            state = self.retriever_tool.run(state)
             state = self.reasoning_tool.run(state)
             state = self.recommendation_tool.run(state)
             return state
@@ -51,10 +54,12 @@ class FruitScannerAgent:
         if next_action == "request_retake":
             state.decision = "retake_photo"
             state.status = "low_confidence"
+            state = self.retriever_tool.run(state)
             state = self.reasoning_tool.run(state)
             state = self.recommendation_tool.run(state)
             return state
 
+        state = self.retriever_tool.run(state)
         state = self.reasoning_tool.run(state)
         state = self.recommendation_tool.run(state)
         state.add_trace("Agent workflow completed.")

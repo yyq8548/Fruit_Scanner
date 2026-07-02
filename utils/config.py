@@ -33,3 +33,7 @@ EDGE_THRESHOLD_FLOOR = 20.0
 USE_LLM_REASONING = os.getenv("USE_LLM_REASONING", "true").lower() == "true"
 LLM_MODEL = os.getenv("OPENAI_MODEL", "gpt-5")
 OPENAI_API_KEY_ENV = "OPENAI_API_KEY"
+
+# RAG settings
+KNOWLEDGE_BASE_PATH = "data/food_knowledge_base.json"
+RAG_TOP_K = 3

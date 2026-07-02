@@ -10,7 +10,7 @@ st.caption("Agentic computer vision assistant for produce quality assessment")
 
 st.write(
     "Upload a fruit image. The agent checks image quality, uses scene analysis as advisory feedback, "
-    "runs DenseNet201 inference, reasons over the result, and returns a recommendation."
+    "runs DenseNet201 inference, retrieves food knowledge, reasons over the result, and returns a recommendation."
 )
 
 agent = FruitScannerAgent(model_path=MODEL_PATH)
@@ -40,6 +40,14 @@ if uploaded_file:
         st.write(f"**Confidence:** {state.prediction.confidence:.2%}")
     else:
         st.write("No prediction was generated because the agent stopped early.")
+
+    st.subheader("Retrieved Knowledge")
+    if state.retrieval and state.retrieval.documents:
+        st.write(f"**Query:** {state.retrieval.query}")
+        for doc in state.retrieval.documents:
+            st.markdown(f"- **{doc.get('id')}** ({doc.get('topic')}): {doc.get('text')}")
+    else:
+        st.write("No knowledge documents retrieved.")
 
     st.subheader("Reasoning")
     if state.reasoning:
