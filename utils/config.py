@@ -1,6 +1,8 @@
 # FreshSense AI configuration
 # Centralizes thresholds, model paths, and UI settings.
 
+import os
+
 APP_TITLE = "FreshSense AI"
 APP_ICON = "🍎"
 APP_LAYOUT = "centered"
@@ -26,3 +28,8 @@ BLUR_THRESHOLD = 80.0
 MIN_FOREGROUND_RATIO = 0.005
 SMALL_FRUIT_RATIO = 0.015
 EDGE_THRESHOLD_FLOOR = 20.0
+
+# LLM settings
+USE_LLM_REASONING = os.getenv("USE_LLM_REASONING", "true").lower() == "true"
+LLM_MODEL = os.getenv("OPENAI_MODEL", "gpt-5")
+OPENAI_API_KEY_ENV = "OPENAI_API_KEY"

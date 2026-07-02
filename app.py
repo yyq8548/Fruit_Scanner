@@ -43,6 +43,7 @@ if uploaded_file:
 
     st.subheader("Reasoning")
     if state.reasoning:
+        st.write(f"**Source:** {state.reasoning.source}")
         st.write(f"**Risk Level:** {state.reasoning.risk_level}")
         st.write(f"**Explanation:** {state.reasoning.explanation}")
         st.write(f"**Shelf-life Estimate:** {state.reasoning.shelf_life_estimate}")

@@ -41,6 +41,7 @@ class ReasoningResult:
     shelf_life_estimate: str
     storage_advice: str
     risk_level: str
+    source: str = "rule_based"
 
 
 @dataclass

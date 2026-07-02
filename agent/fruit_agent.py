@@ -6,7 +6,7 @@ from tools.image_quality import ImageQualityTool
 from tools.scene_analysis import SceneAnalysisTool
 from tools.vision import DenseNetVisionTool
 from tools.confidence import ConfidenceTool
-from tools.reasoning import RuleBasedReasoningTool
+from tools.llm_reasoning import LLMReasoningTool
 from tools.recommendation import RecommendationTool
 from utils.config import MIN_CONFIDENCE
 
@@ -20,7 +20,7 @@ class FruitScannerAgent:
         self.scene_tool = SceneAnalysisTool()
         self.vision_tool = DenseNetVisionTool(model_path=model_path)
         self.confidence_tool = ConfidenceTool(min_confidence=min_confidence)
-        self.reasoning_tool = RuleBasedReasoningTool()
+        self.reasoning_tool = LLMReasoningTool()
         self.recommendation_tool = RecommendationTool()
 
     def run(self, image: Image.Image) -> AgentState:
