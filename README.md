@@ -225,13 +225,8 @@ Every push automatically runs the test suite using GitHub Actions.
 
 # 👨‍💻 Author
 
-**Christopher Yu**
+**Chris Yu**
 
-M.S. in Applied Data Science\
-University of Chicago
-
-Interested in Applied AI, AI Agents, Computer Vision, Machine Learning
-Engineering, and LLM Systems.
 
 ------------------------------------------------------------------------
 
